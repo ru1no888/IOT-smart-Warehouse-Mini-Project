@@ -1,0 +1,1068 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>⚡ Warehouse // IOT COMMAND CENTER</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;500;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #00ffff;
+            --secondary: #ff00ff;
+            --accent: #ffff00;
+            --danger: #ff0080;
+            --success: #00ff88;
+            --bg-space: #0a0a1a;
+            --panel-glass: rgba(10, 10, 30, 0.7);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Rajdhani', sans-serif;
+            background: var(--bg-space);
+            color: #fff;
+            overflow-x: hidden;
+            position: relative;
+            min-height: 100vh;
+        }
+
+        /* 🌌 Animated Aurora Background */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: 
+                radial-gradient(ellipse at 20% 30%, rgba(0, 255, 255, 0.15) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 70%, rgba(255, 0, 255, 0.15) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 50%, rgba(255, 255, 0, 0.1) 0%, transparent 50%);
+            animation: aurora 15s ease-in-out infinite;
+            z-index: 1;
+        }
+
+        @keyframes aurora {
+            0%, 100% { 
+                background: radial-gradient(ellipse at 20% 30%, rgba(0, 255, 255, 0.15) 0%, transparent 50%),
+                            radial-gradient(ellipse at 80% 70%, rgba(255, 0, 255, 0.15) 0%, transparent 50%);
+            }
+            50% { 
+                background: radial-gradient(ellipse at 70% 60%, rgba(255, 0, 255, 0.2) 0%, transparent 50%),
+                            radial-gradient(ellipse at 30% 40%, rgba(0, 255, 255, 0.2) 0%, transparent 50%);
+            }
+        }
+
+        /* ⭐ Particle Stars Background */
+        #particles {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            z-index: 2;
+            pointer-events: none;
+        }
+
+        .container {
+            max-width: 1400px; 
+            margin: auto; 
+            padding: 20px;
+            position: relative; 
+            z-index: 10;
+        }
+
+        /* 🎯 Futuristic Header with Glitch */
+        .header {
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center;
+            padding: 25px;
+            margin-bottom: 40px;
+            background: linear-gradient(135deg, rgba(0, 255, 255, 0.1), rgba(255, 0, 255, 0.1));
+            border: 2px solid transparent;
+            border-image: linear-gradient(90deg, var(--primary), var(--secondary), var(--accent)) 1;
+            position: relative;
+            backdrop-filter: blur(10px);
+            clip-path: polygon(0 0, calc(100% - 30px) 0, 100% 30px, 100% 100%, 30px 100%, 0 calc(100% - 30px));
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(90deg, transparent, rgba(0, 255, 255, 0.3), transparent);
+            transform: translateX(-100%);
+            animation: scan 3s infinite;
+        }
+
+        @keyframes scan {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(200%); }
+        }
+
+        .header h1 { 
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2.5rem;
+            font-weight: 900;
+            background: linear-gradient(90deg, var(--primary), var(--secondary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 0 0 30px rgba(0, 255, 255, 0.5);
+            letter-spacing: 3px;
+            animation: glitch 5s infinite;
+            position: relative;
+        }
+
+        @keyframes glitch {
+            0%, 90%, 100% { transform: translate(0); }
+            92% { transform: translate(-2px, 2px); }
+            94% { transform: translate(2px, -2px); }
+            96% { transform: translate(-2px, -2px); }
+        }
+
+        /* 🎨 Status Badge */
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 8px 15px;
+            background: var(--panel-glass);
+            border: 1px solid var(--success);
+            border-radius: 20px;
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 0.9rem;
+            color: var(--success);
+            box-shadow: 0 0 15px rgba(0, 255, 136, 0.3), inset 0 0 10px rgba(0, 255, 136, 0.1);
+            animation: pulse-glow 2s infinite;
+        }
+
+        @keyframes pulse-glow {
+            0%, 100% { box-shadow: 0 0 15px rgba(0, 255, 136, 0.3), inset 0 0 10px rgba(0, 255, 136, 0.1); }
+            50% { box-shadow: 0 0 25px rgba(0, 255, 136, 0.5), inset 0 0 15px rgba(0, 255, 136, 0.2); }
+        }
+
+        .status-badge::before {
+            content: '●';
+            margin-right: 8px;
+            animation: blink 1.5s infinite;
+        }
+
+        @keyframes blink { 0%, 50%, 100% { opacity: 1; } 25%, 75% { opacity: 0.3; } }
+
+        /* 🔘 Futuristic Buttons */
+        .btn-cyber {
+            background: linear-gradient(135deg, rgba(0, 255, 255, 0.1), rgba(255, 0, 255, 0.1));
+            color: var(--primary);
+            border: 2px solid var(--primary);
+            padding: 10px 20px;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 700;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+            clip-path: polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px);
+        }
+
+        .btn-cyber::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(90deg, transparent, rgba(0, 255, 255, 0.5), transparent);
+            transform: translateX(-100%);
+            transition: transform 0.5s;
+        }
+
+        .btn-cyber:hover::before { transform: translateX(100%); }
+        .btn-cyber:hover { 
+            background: rgba(0, 255, 255, 0.2); 
+            box-shadow: 0 0 30px rgba(0, 255, 255, 0.6), inset 0 0 20px rgba(0, 255, 255, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .btn-danger { 
+            border-color: var(--danger); 
+            background: linear-gradient(135deg, rgba(255, 0, 128, 0.1), rgba(255, 0, 255, 0.1));
+            color: var(--danger); 
+            text-decoration: none;
+        }
+        .btn-danger:hover { 
+            background: rgba(255, 0, 128, 0.2); 
+            box-shadow: 0 0 30px rgba(255, 0, 128, 0.6), inset 0 0 20px rgba(255, 0, 128, 0.3);
+        }
+
+        /* 🎴 Grid Layout */
+        .grid-dashboard {
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); 
+            gap: 25px;
+        }
+
+        /* 💎 Holographic Glass Panel */
+        .cyber-panel {
+            background: var(--panel-glass);
+            border: 2px solid rgba(0, 255, 255, 0.3);
+            border-radius: 15px;
+            padding: 25px;
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(15px) saturate(180%);
+            box-shadow: 
+                0 8px 32px rgba(0, 0, 0, 0.4),
+                inset 0 0 20px rgba(0, 255, 255, 0.05);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transform-style: preserve-3d;
+        }
+
+        .cyber-panel::before {
+            content: '';
+            position: absolute;
+            top: -50%; left: -50%;
+            width: 200%; height: 200%;
+            background: linear-gradient(
+                45deg,
+                transparent 30%,
+                rgba(0, 255, 255, 0.1) 50%,
+                transparent 70%
+            );
+            transform: rotate(0deg);
+            animation: shimmer 8s linear infinite;
+        }
+
+        @keyframes shimmer {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .cyber-panel:hover {
+            transform: translateY(-8px) rotateX(2deg);
+            border-color: rgba(0, 255, 255, 0.8);
+            box-shadow: 
+                0 15px 45px rgba(0, 255, 255, 0.3),
+                inset 0 0 30px rgba(0, 255, 255, 0.1);
+        }
+
+        /* 🔥 Corner Decorations */
+        .cyber-panel::after {
+            content: '';
+            position: absolute;
+            top: 10px; right: 10px;
+            width: 30px; height: 30px;
+            border-top: 3px solid var(--primary);
+            border-right: 3px solid var(--primary);
+            opacity: 0.5;
+        }
+
+        /* ⚠️ Alert State with Lightning Effect */
+        .cyber-panel.alert {
+            border-color: var(--danger);
+            background: linear-gradient(135deg, rgba(255, 0, 128, 0.15), var(--panel-glass));
+            animation: lightning 2s infinite;
+        }
+
+        @keyframes lightning {
+            0%, 90%, 100% { 
+                box-shadow: 0 8px 32px rgba(255, 0, 128, 0.4), inset 0 0 20px rgba(255, 0, 128, 0.1);
+            }
+            92%, 96% { 
+                box-shadow: 0 0 50px rgba(255, 0, 128, 0.9), inset 0 0 40px rgba(255, 0, 128, 0.4);
+            }
+        }
+
+        /* 📊 Value Display with Hologram Effect */
+        .value-display { 
+            font-family: 'Orbitron', sans-serif; 
+            font-size: 5rem; 
+            font-weight: 900;
+            margin: 15px 0; 
+            background: linear-gradient(180deg, #fff, var(--primary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            filter: drop-shadow(0 0 20px rgba(0, 255, 255, 0.8));
+            position: relative;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .cyber-panel p { 
+            margin: 0; 
+            color: var(--primary); 
+            font-size: 1.2rem; 
+            text-transform: uppercase; 
+            letter-spacing: 3px; 
+            font-weight: 700;
+            position: relative;
+            z-index: 1;
+        }
+
+        .cyber-panel.alert p { color: var(--danger); }
+        .cyber-panel.alert .value-display { 
+            background: linear-gradient(180deg, #fff, var(--danger));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            filter: drop-shadow(0 0 25px rgba(255, 0, 128, 0.9));
+        }
+
+        /* 📈 Chart Styling */
+        .chart-container { 
+            width: 100%; 
+            height: 280px; 
+            margin-top: 20px; 
+            position: relative;
+            z-index: 1;
+        }
+
+        /* 📜 Data Log Table with Holographic Style */
+        .log-container { 
+            margin-top: 25px; 
+            height: 320px; 
+            overflow-y: auto; 
+            padding-right: 10px;
+            position: relative;
+            z-index: 1;
+        }
+        .log-container::-webkit-scrollbar { width: 10px; }
+        .log-container::-webkit-scrollbar-track { 
+            background: rgba(0, 255, 255, 0.05); 
+            border-radius: 5px;
+        }
+        .log-container::-webkit-scrollbar-thumb { 
+            background: linear-gradient(180deg, var(--primary), var(--secondary)); 
+            border-radius: 5px;
+            box-shadow: 0 0 10px var(--primary);
+        }
+        .log-container::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(180deg, var(--secondary), var(--accent));
+        }
+
+        table { 
+            width: 100%; 
+            border-collapse: collapse; 
+            font-family: 'Share Tech Mono', monospace; 
+            text-align: left; 
+        }
+        th { 
+            position: sticky; 
+            top: 0; 
+            background: linear-gradient(135deg, rgba(0, 255, 255, 0.2), rgba(255, 0, 255, 0.2));
+            color: var(--primary); 
+            padding: 15px 12px; 
+            border-bottom: 2px solid var(--primary); 
+            text-transform: uppercase;
+            font-weight: 700;
+            letter-spacing: 2px;
+            backdrop-filter: blur(10px);
+        }
+        td { 
+            padding: 12px; 
+            border-bottom: 1px solid rgba(0, 255, 255, 0.1); 
+            color: #ccc;
+            transition: all 0.3s;
+        }
+        tr:hover td { 
+            background: rgba(0, 255, 255, 0.1); 
+            color: #fff;
+            transform: scale(1.02);
+            box-shadow: 0 0 15px rgba(0, 255, 255, 0.3);
+        }
+
+        .status-ok { 
+            color: var(--success); 
+            border-color: var(--success); 
+            box-shadow: 0 0 8px rgba(0, 255, 136, 0.5) inset;
+            padding: 5px 12px;
+            border-radius: 15px;
+            border: 1px solid;
+            font-weight: 700;
+        }
+        .status-warn { 
+            color: var(--danger); 
+            border-color: var(--danger); 
+            box-shadow: 0 0 8px rgba(255, 0, 128, 0.5) inset;
+            animation: pulse-warn 1.5s infinite;
+            padding: 5px 12px;
+            border-radius: 15px;
+            border: 1px solid;
+            font-weight: 700;
+        }
+        @keyframes pulse-warn { 
+            0%, 100% { opacity: 1; box-shadow: 0 0 8px rgba(255, 0, 128, 0.5) inset; } 
+            50% { opacity: 0.6; box-shadow: 0 0 15px rgba(255, 0, 128, 0.8) inset; } 
+        }
+
+        /* 🎮 Control Buttons */
+        .control-grid { 
+            display: grid; 
+            grid-template-columns: 1fr 1fr; 
+            gap: 15px; 
+            margin-top: 20px; 
+        }
+        .btn-ctrl { 
+            padding: 15px; 
+            width: 100%; 
+            border: 2px solid;
+            background: var(--panel-glass);
+            color: #fff; 
+            cursor: pointer; 
+            transition: all 0.3s;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 700;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+            clip-path: polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px);
+        }
+
+        .btn-ctrl::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(90deg, transparent, currentColor, transparent);
+            opacity: 0.3;
+            transform: translateX(-100%);
+            transition: transform 0.4s;
+        }
+
+        .btn-ctrl:hover::before { transform: translateX(100%); }
+
+        .btn-ctrl.on { 
+            border-color: var(--success); 
+            color: var(--success);
+            box-shadow: 0 0 15px rgba(0, 255, 136, 0.4);
+        }
+        .btn-ctrl.on:hover { 
+            background: rgba(0, 255, 136, 0.2);
+            box-shadow: 0 0 25px rgba(0, 255, 136, 0.6);
+            transform: scale(1.05);
+        }
+        .btn-ctrl.off { 
+            border-color: var(--danger); 
+            color: var(--danger);
+            box-shadow: 0 0 15px rgba(255, 0, 128, 0.4);
+        }
+        .btn-ctrl.off:hover { 
+            background: rgba(255, 0, 128, 0.2);
+            box-shadow: 0 0 25px rgba(255, 0, 128, 0.6);
+            transform: scale(1.05);
+        }
+        .btn-ctrl.auto { 
+            border-color: var(--primary); 
+            color: var(--primary);
+            box-shadow: 0 0 15px rgba(0, 255, 255, 0.4);
+        }
+        .btn-ctrl.auto:hover { 
+            background: rgba(0, 255, 255, 0.2);
+            box-shadow: 0 0 25px rgba(0, 255, 255, 0.6);
+            transform: scale(1.05);
+        }
+
+        /* 💫 Floating Orbs Decoration */
+        .orb {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(40px);
+            opacity: 0.4;
+            pointer-events: none;
+            z-index: 3;
+            animation: orbit 20s infinite ease-in-out;
+        }
+
+        .orb1 { 
+            width: 300px; height: 300px; 
+            background: radial-gradient(circle, var(--primary), transparent);
+            top: 10%; left: 10%;
+            animation-duration: 25s;
+        }
+
+        .orb2 { 
+            width: 400px; height: 400px; 
+            background: radial-gradient(circle, var(--secondary), transparent);
+            bottom: 10%; right: 10%;
+            animation-duration: 30s;
+            animation-direction: reverse;
+        }
+
+        .orb3 { 
+            width: 200px; height: 200px; 
+            background: radial-gradient(circle, var(--accent), transparent);
+            top: 50%; left: 50%;
+            animation-duration: 20s;
+        }
+
+        @keyframes orbit {
+            0%, 100% { transform: translate(0, 0); }
+            25% { transform: translate(100px, 50px); }
+            50% { transform: translate(50px, 100px); }
+            75% { transform: translate(-50px, 50px); }
+        }
+
+        #db-status { 
+            font-family: 'Share Tech Mono', monospace; 
+            font-size: 1.1rem;
+            font-weight: 700;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- 🌌 Floating Orbs -->
+    <div class="orb orb1"></div>
+    <div class="orb orb2"></div>
+    <div class="orb orb3"></div>
+
+    <!-- ⭐ Particle Canvas -->
+    <canvas id="particles"></canvas>
+    <div class="container">
+        <header class="header">
+            <h1>⚡ WAREHOUSE IOT DASHBOARD</h1>
+            <div style="display:flex; gap: 15px; align-items:center; flex-wrap: wrap;">
+                <span class="status-badge" id="db-status">ONLINE</span>
+                <button class="btn-cyber" onclick="exportCSV()">📥 EXPORT DATA</button>
+                <a href="logout.php" class="btn-cyber btn-danger">🚪 LOGOUT</a>
+            </div>
+        </header>
+
+        <div class="grid-dashboard">
+            <div class="cyber-panel" id="temp-card">
+                <p>🌡️ TEMPERATURE SENSOR</p>
+                <div class="value-display"><span id="temp">--</span>°C</div>
+                <div class="chart-container"><canvas id="tempChart"></canvas></div>
+            </div>
+
+            <div class="cyber-panel" id="hum-card">
+                <p>💧 HUMIDITY SENSOR</p>
+                <div class="value-display"><span id="hum">--</span>%</div>
+                <div class="chart-container"><canvas id="humChart"></canvas></div>
+            </div>
+        </div>
+
+        <div class="grid-dashboard" style="margin-top: 25px;">
+            <div class="cyber-panel" style="grid-column: span 1;">
+                <p>📊 SYSTEM DATALOG</p>
+                <div class="log-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>⏰ TIMESTAMP</th>
+                                <th>🌡️ TEMP</th>
+                                <th>💧 HUMID</th>
+                                <th>⚡ STATUS</th>
+                            </tr>
+                        </thead>
+                        <tbody id="logTableBody"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="cyber-panel" style="grid-column: span 1;">
+                <p>🎮 COMMAND CENTER</p>
+                
+                <div style="margin-top: 20px; padding: 15px; background: rgba(0, 255, 255, 0.05); border-radius: 10px; border: 1px solid rgba(0, 255, 255, 0.2);">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                        <span style="color: #aaa; font-size: 1rem; font-weight: 700;">❄️ COOLING FAN</span>
+                        <strong id="fan-txt" style="color: var(--primary); font-family: 'Share Tech Mono', monospace;">WAITING...</strong>
+                    </div>
+                    <div class="control-grid">
+                        <button class="btn-ctrl on" onclick="control('fan_manual',1); control('fan_state',1)">▶ ON</button>
+                        <button class="btn-ctrl off" onclick="control('fan_manual',1); control('fan_state',0)">⏸ OFF</button>
+                        <button class="btn-ctrl auto" style="grid-column: span 2;" onclick="control('fan_manual',0)">🤖 AUTO MODE</button>
+                    </div>
+                </div>
+
+                <div style="margin-top: 20px; padding: 15px; background: rgba(255, 0, 128, 0.05); border-radius: 10px; border: 1px solid rgba(255, 0, 128, 0.2);">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                        <span style="color: #aaa; font-size: 1rem; font-weight: 700;">🚨 ALARM SYSTEM</span>
+                        <strong id="buzz-txt" style="color: var(--danger); font-family: 'Share Tech Mono', monospace;">WAITING...</strong>
+                    </div>
+                    <div class="control-grid">
+                        <button class="btn-ctrl on" onclick="control('buzzer_manual',1); control('buzzer_state',1)">▶ ON</button>
+                        <button class="btn-ctrl off" onclick="control('buzzer_manual',1); control('buzzer_state',0)">⏸ OFF</button>
+                        <button class="btn-ctrl auto" style="grid-column: span 2;" onclick="control('buzzer_manual',0)">🤖 AUTO MODE</button>
+                    </div>
+                </div>
+
+                <button class="btn-cyber" style="width: 100%; margin-top: 25px; border-color: var(--accent); color: var(--accent); font-size: 1.1rem; padding: 18px;" onclick="control('gate_trigger',1)">🔓 TRIGGER GATE ACCESS</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ⭐ PARTICLE STARS ANIMATION
+        const canvas = document.getElementById('particles');
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        class Particle {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 2 + 0.5;
+                this.speedX = Math.random() * 0.5 - 0.25;
+                this.speedY = Math.random() * 0.5 - 0.25;
+                this.opacity = Math.random() * 0.5 + 0.2;
+            }
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+                if (this.x > canvas.width) this.x = 0;
+                if (this.x < 0) this.x = canvas.width;
+                if (this.y > canvas.height) this.y = 0;
+                if (this.y < 0) this.y = canvas.height;
+            }
+            draw() {
+                ctx.fillStyle = `rgba(0, 255, 255, ${this.opacity})`;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+
+        const particlesArray = [];
+        const particleCount = 150;
+        for (let i = 0; i < particleCount; i++) {
+            particlesArray.push(new Particle());
+        }
+
+        function animateParticles() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particlesArray.forEach(particle => {
+                particle.update();
+                particle.draw();
+            });
+            requestAnimationFrame(animateParticles);
+        }
+        animateParticles();
+
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        });
+
+        // 📊 CHART CONFIGURATION
+        Chart.defaults.color = '#00ffff';
+        Chart.defaults.font.family = "'Share Tech Mono', monospace";
+        
+        const chartOptions = {
+            responsive: true, 
+            maintainAspectRatio: false,
+            plugins: { 
+                legend: { display: false },
+                tooltip: {
+                    backgroundColor: 'rgba(10, 10, 30, 0.9)',
+                    borderColor: '#00ffff',
+                    borderWidth: 2,
+                    titleColor: '#00ffff',
+                    bodyColor: '#fff',
+                    padding: 12,
+                    displayColors: false
+                }
+            },
+            scales: {
+                x: { 
+                    grid: { color: 'rgba(0, 255, 255, 0.1)' },
+                    ticks: { color: '#00ffff' }
+                },
+                y: { 
+                    grid: { color: 'rgba(0, 255, 255, 0.1)' },
+                    ticks: { color: '#00ffff' }
+                }
+            },
+            elements: { 
+                point: { radius: 3, hitRadius: 10, hoverRadius: 6, backgroundColor: '#00ffff' },
+                line: { tension: 0.4 }
+            }
+        };
+
+        const ctxTemp = document.getElementById('tempChart').getContext('2d');
+        let tempChart = new Chart(ctxTemp, {
+            type: 'line',
+            data: { 
+                labels: [], 
+                datasets: [{ 
+                    data: [], 
+                    borderColor: '#ff0080', 
+                    backgroundColor: 'rgba(255, 0, 128, 0.2)', 
+                    fill: true, 
+                    borderWidth: 3,
+                    pointBackgroundColor: '#ff0080',
+                    pointBorderColor: '#fff',
+                    pointBorderWidth: 2
+                }] 
+            },
+            options: chartOptions
+        });
+
+        const ctxHum = document.getElementById('humChart').getContext('2d');
+        let humChart = new Chart(ctxHum, {
+            type: 'line',
+            data: { 
+                labels: [], 
+                datasets: [{ 
+                    data: [], 
+                    borderColor: '#00ffff', 
+                    backgroundColor: 'rgba(0, 255, 255, 0.2)', 
+                    fill: true, 
+                    borderWidth: 3,
+                    pointBackgroundColor: '#00ffff',
+                    pointBorderColor: '#fff',
+                    pointBorderWidth: 2
+                }] 
+            },
+            options: chartOptions
+        });
+
+        let currentGraphData = [];
+
+        // 🔄 REAL-TIME DASHBOARD UPDATE
+        function updateDashboard() {
+            const startTime = performance.now();
+            
+            fetch('get_data.php', {
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest'
+                },
+                credentials: 'same-origin'
+            })
+            .then(res => {
+                if (res.status === 401) {
+                    console.warn('⚠️ Session expired - redirecting to login');
+                    window.location.href = 'login.php';
+                    throw new Error('Session expired');
+                }
+                if (res.status === 429) {
+                    console.warn('🚫 Rate limit exceeded! Please wait...');
+                    throw new Error('Rate limit exceeded');
+                }
+                if (!res.ok) throw new Error('Network error');
+                return res.json();
+            })
+            .then(data => {
+                    const loadTime = (performance.now() - startTime).toFixed(0);
+                    
+                    if (data.latest) {
+                        const t = parseFloat(data.latest.temp_value);
+                        const h = parseFloat(data.latest.hum_value);
+                        
+                        // Console log for real-time monitoring
+                        console.log(`📊 [${new Date().toLocaleTimeString()}] Temp: ${t}°C | Humidity: ${h}% | Load: ${loadTime}ms`);
+                        
+                        // Update values - ใส่ค่าตรงๆ ไม่ต้อง animate เพื่อป้องกันทับกัน
+                        document.getElementById('temp').innerText = t.toFixed(1);
+                        document.getElementById('hum').innerText = h.toFixed(1);
+                        
+                        // Update status badge
+                        const statusBadge = document.getElementById('db-status');
+                        const time = data.latest.timestamp.split(' ')[1];
+                        statusBadge.innerHTML = `● CONNECTED // ${time}`;
+                        statusBadge.style.color = 'var(--success)';
+                        statusBadge.style.borderColor = 'var(--success)';
+
+                        // Alert states with visual effects
+                        const tempCard = document.getElementById('temp-card');
+                        const humCard = document.getElementById('hum-card');
+                        
+                        if (t > 28) {
+                            tempCard.classList.add('alert');
+                            createAlertPulse(tempCard);
+                        } else {
+                            tempCard.classList.remove('alert');
+                        }
+                        
+                        if (h > 80) {
+                            humCard.classList.add('alert');
+                            createAlertPulse(humCard);
+                        } else {
+                            humCard.classList.remove('alert');
+                        }
+                    }
+
+                    if (data.status) {
+                        const fanTxt = document.getElementById('fan-txt');
+                        const buzzTxt = document.getElementById('buzz-txt');
+                        
+                        if (data.status.fan_manual == 1) {
+                            fanTxt.innerText = data.status.fan_state == 1 ? '⚡ OVERRIDE ON' : '⏸ OVERRIDE OFF';
+                            fanTxt.style.color = data.status.fan_state == 1 ? 'var(--success)' : 'var(--danger)';
+                        } else {
+                            fanTxt.innerText = '🤖 AUTO MODE';
+                            fanTxt.style.color = 'var(--primary)';
+                        }
+                        
+                        if (data.status.buzzer_manual == 1) {
+                            buzzTxt.innerText = data.status.buzzer_state == 1 ? '⚡ OVERRIDE ON' : '⏸ OVERRIDE OFF';
+                            buzzTxt.style.color = data.status.buzzer_state == 1 ? 'var(--success)' : 'var(--danger)';
+                        } else {
+                            buzzTxt.innerText = '🤖 AUTO MODE';
+                            buzzTxt.style.color = 'var(--primary)';
+                        }
+                    }
+
+                    if (data.graph && data.graph.length > 0) {
+                        currentGraphData = data.graph;
+                        
+                        // Update charts with smooth animation
+                        const labels = data.graph.map(i => i.timestamp.split(' ')[1]);
+                        tempChart.data.labels = labels; 
+                        tempChart.data.datasets[0].data = data.graph.map(i => i.temp_value); 
+                        tempChart.update('active');
+                        
+                        humChart.data.labels = labels; 
+                        humChart.data.datasets[0].data = data.graph.map(i => i.hum_value); 
+                        humChart.update('active');
+
+                        // Update data log table
+                        updateLogTable(data.graph);
+                    }
+                })
+                .catch(err => {
+                    if (err.message === 'Session expired' || err.message === 'Rate limit exceeded') {
+                        return; // Already handled
+                    }
+                    const statusBadge = document.getElementById('db-status');
+                    statusBadge.innerHTML = '● CONNECTION LOST';
+                    statusBadge.style.color = 'var(--danger)';
+                    statusBadge.style.borderColor = 'var(--danger)';
+                    console.error('❌ Connection error:', err.message);
+                });
+        }
+
+        // 🎯 เก็บ animation timers เพื่อ cancel ก่อนเริ่มใหม่
+        const animationTimers = {};
+        
+        function animateValue(id, start, end, duration) {
+            const element = document.getElementById(id);
+            
+            // Cancel previous animation for this element
+            if (animationTimers[id]) {
+                clearInterval(animationTimers[id]);
+                delete animationTimers[id];
+            }
+            
+            // Handle NaN cases - แสดงค่าใหม่ทันที
+            if (isNaN(start) || isNaN(end)) {
+                element.innerText = isNaN(end) ? '--' : end.toFixed(1);
+                return;
+            }
+            
+            // ถ้าค่าเท่ากัน แสดงทันทีไม่ต้อง animate
+            if (Math.abs(end - start) < 0.1) {
+                element.innerText = end.toFixed(1);
+                return;
+            }
+            
+            const range = end - start;
+            const steps = duration / 50; // ลด steps เพื่อทำงานไวขึ้น
+            const increment = range / steps;
+            let current = start;
+            let step = 0;
+            
+            animationTimers[id] = setInterval(() => {
+                step++;
+                current += increment;
+                if (step >= steps || (increment > 0 && current >= end) || (increment < 0 && current <= end)) {
+                    element.innerText = end.toFixed(1);
+                    clearInterval(animationTimers[id]);
+                    delete animationTimers[id];
+                } else {
+                    element.innerText = current.toFixed(1);
+                }
+            }, 50);
+        }
+
+        // 💫 Create alert pulse effect
+        function createAlertPulse(element) {
+            if (element.dataset.pulsing) return;
+            element.dataset.pulsing = 'true';
+            setTimeout(() => delete element.dataset.pulsing, 2000);
+        }
+
+        // 📊 Update log table with enhanced styling
+        function updateLogTable(graphData) {
+            const tbody = document.getElementById('logTableBody');
+            tbody.innerHTML = '';
+            const reversedData = [...graphData].reverse(); 
+            
+            reversedData.forEach((row, index) => {
+                let tr = document.createElement('tr');
+                let tVal = parseFloat(row.temp_value);
+                let hVal = parseFloat(row.hum_value);
+                
+                const isAlert = tVal > 28 || hVal > 80;
+                const statusHtml = isAlert 
+                    ? '<span class="status-warn">⚠ WARNING</span>'
+                    : '<span class="status-ok">✓ NORMAL</span>';
+
+                tr.innerHTML = `
+                    <td style="color: var(--primary)">${row.timestamp.split(' ')[1]}</td>
+                    <td style="color: ${tVal > 28 ? 'var(--danger)' : '#fff'}; font-weight: ${tVal > 28 ? '700' : '400'}">${tVal}°C</td>
+                    <td style="color: ${hVal > 80 ? 'var(--danger)' : '#fff'}; font-weight: ${hVal > 60 ? '700' : '400'}">${hVal}%</td>
+                    <td>${statusHtml}</td>
+                `;
+                
+                tr.style.opacity = '0';
+                tr.style.transform = 'translateX(-20px)';
+                tbody.appendChild(tr);
+                
+                setTimeout(() => {
+                    tr.style.transition = 'all 0.3s ease';
+                    tr.style.opacity = '1';
+                    tr.style.transform = 'translateX(0)';
+                }, index * 20);
+            });
+        }
+
+        // 🔄 Auto refresh ทุก 1 วินาที
+        setInterval(updateDashboard, 1000);
+        updateDashboard();
+        console.log('✅ Dashboard initialized - Auto refresh every 1 second');
+
+        // 🎮 Control functions
+        function control(col, val) {
+            fetch(`api_control.php?action=set&column=${col}&value=${val}`, {
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest'
+                },
+                credentials: 'same-origin'
+            })
+            .then(res => {
+                if (res.status === 401) {
+                    window.location.href = 'login.php';
+                    throw new Error('Session expired');
+                }
+                showNotification(`Command sent: ${col} = ${val}`);
+                setTimeout(updateDashboard, 500);
+            })
+            .catch(err => {
+                if (err.message !== 'Session expired') {
+                    showNotification('❌ Control failed!', 'error');
+                }
+            });
+
+            if (col === 'gate_trigger' && val === 1) {
+                showNotification('🔓 Gate access triggered!', 'success');
+                setTimeout(() => control('gate_trigger', 0), 3000);
+            }
+        }
+
+        // 📥 Export CSV with enhanced features
+        function exportCSV() {
+            if (currentGraphData.length === 0) {
+                showNotification('⚠ No data available to export!', 'error');
+                return;
+            }
+            
+            showNotification('📥 Exporting data...', 'success');
+            
+            let csvContent = "data:text/csv;charset=utf-8,\uFEFFTIMESTAMP,TEMPERATURE (°C),HUMIDITY (%),STATUS\n";
+            currentGraphData.forEach(row => { 
+                const tVal = parseFloat(row.temp_value);
+                const hVal = parseFloat(row.hum_value);
+                const status = (tVal > 28 || hVal > 80) ? 'WARNING' : 'NORMAL';
+                csvContent += `${row.timestamp},${tVal},${hVal},${status}\n`; 
+            });
+            
+            const encodedUri = encodeURI(csvContent);
+            const link = document.createElement("a");
+            const timestamp = new Date().toISOString().replace(/[:.]/g, '-').slice(0, -5);
+            link.setAttribute("href", encodedUri);
+            link.setAttribute("download", `quantum_nexus_${timestamp}.csv`);
+            document.body.appendChild(link); 
+            link.click(); 
+            document.body.removeChild(link);
+            
+            showNotification('✅ Data exported successfully!', 'success');
+        }
+
+        // 🔔 Notification system
+        function showNotification(message, type = 'info') {
+            const notification = document.createElement('div');
+            const colors = {
+                'success': 'var(--success)',
+                'error': 'var(--danger)',
+                'info': 'var(--primary)'
+            };
+            
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: var(--panel-glass);
+                border: 2px solid ${colors[type] || colors.info};
+                color: ${colors[type] || colors.info};
+                padding: 15px 25px;
+                border-radius: 10px;
+                font-family: 'Share Tech Mono', monospace;
+                font-weight: 700;
+                z-index: 10000;
+                backdrop-filter: blur(15px);
+                box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6), 0 0 20px ${colors[type] || colors.info};
+                animation: slideIn 0.3s ease;
+                max-width: 300px;
+            `;
+            notification.innerText = message;
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.style.animation = 'slideOut 0.3s ease';
+                setTimeout(() => notification.remove(), 300);
+            }, 3000);
+        }
+
+        // Add notification animations
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes slideIn {
+                from { transform: translateX(400px); opacity: 0; }
+                to { transform: translateX(0); opacity: 1; }
+            }
+            @keyframes slideOut {
+                from { transform: translateX(0); opacity: 1; }
+                to { transform: translateX(400px); opacity: 0; }
+            }
+        `;
+        document.head.appendChild(style);
+
+        // 🎨 Interactive 3D tilt effect on panels
+        document.querySelectorAll('.cyber-panel').forEach(panel => {
+            panel.addEventListener('mousemove', (e) => {
+                const rect = panel.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+                const rotateX = (y - centerY) / 20;
+                const rotateY = (centerX - x) / 20;
+                
+                panel.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-8px)`;
+            });
+            
+            panel.addEventListener('mouseleave', () => {
+                panel.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) translateY(0)';
+            });
+        });
+
+        // 🌟 Welcome animation
+        window.addEventListener('load', () => {
+            showNotification('⚡ QUANTUM NEXUS ONLINE', 'success');
+        });
+
+        // ⌨️ Keyboard shortcuts
+        document.addEventListener('keydown', (e) => {
+            if (e.ctrlKey && e.key === 'e') {
+                e.preventDefault();
+                exportCSV();
+            }
+        });
+    </script>
+</body>
+</html>

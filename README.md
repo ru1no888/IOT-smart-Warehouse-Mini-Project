@@ -9,6 +9,16 @@
 </p>
 
 > 🎓 Final Project IOT - ระบบควบคุมคลังสินค้าอัจฉริยะ ด้วย ESP32 + Web Dashboard + Telegram Bot
+![46566_0](https://github.com![46561_0](https://github.com/user-attachments/assets/6b76b492-921f-494d-ae12-94c9e245e216)
+![46565_0](https://github.com/user-attachments/assets/6da2c1d2-ccf9-4196-b5ef-4735499eb595)
+/user-attachments/assets/4fd4fcdf-dfcf-4250-97aa-4571a2aa00df)
+![46562_0](https://github.com/user-attachments/assets/3e2702fe-c4e3-4ef1-8d3b-1e2aa0537c4d)![46564_0](https://github.com/user-attachments/assets/93bae79a-0d05-469f-b14f-43f18add190b)
+![46563_0](https://github.com/user-attachments/assets/1483a622-d101-4133-af9c-037d5d6a0705)![46567_0](https://github.com/user-attachments/assets/5b3a53c6-6a46-4126-a3ca-f6e55191d05f)
+
+![messageImage_1772163820297_0](https://github.com/user-attachments/assets/781b8954-25db-4a8e-bbcc-7b3d7fb93425)
+![messageImage_1772163811361_0](https://github.com/user-attachments/assets/e3e758f1-cbce-4472-bacb-9a10ef5bb9ad)
+![messageImage_1772163830837_0](https://github.com/user-attachments/assets/e2c3855a-7b2b-4ac7-a2bb-a640cecef2a8)
+
 
 ## 📋 สารบัญ
 
@@ -311,3 +321,4 @@ This project is licensed under the MIT License.
 <p align="center">
   Made with ❤️ for IOT Final Project 2026
 </p>
+

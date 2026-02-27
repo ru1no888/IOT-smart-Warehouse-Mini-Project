@@ -61,8 +61,8 @@
 
 ### 1. Clone Repository
 ```bash
-git clone https://github.com/thanakornsp/IOT-FINAL-PROJECT-smart-wareHouse.git
-cd IOT-FINAL-PROJECT-smart-wareHouse
+git clone https://github.com/ru1no888/IOT-smart-Warehouse-Mini-Project.git
+cd IOT-smart-Warehouse-Mini-Project
 ```
 
 ### 2. ย้ายไฟล์ไปยัง XAMPP
